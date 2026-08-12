@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Check, X, Heart, Loader2 } from 'lucide-react';
+import { Check, X, Heart, Loader2, MapPin } from 'lucide-react';
 
 const API_URL = import.meta.env.VITE_API_URL || '';
+const MAPS_URL = 'https://maps.app.goo.gl/6a6B8FD8BA67sxqa9';
 
 export default function Rsvp() {
   const { token } = useParams();
@@ -30,6 +31,7 @@ export default function Rsvp() {
       if (data.status !== 0) {
         setStatus(data.status);
         setMessage(data.message || '');
+        setIsSuccess(true);
       }
     } catch (err) {
       setError(err.message);
@@ -51,6 +53,10 @@ export default function Rsvp() {
       });
 
       if (res.ok) {
+        const data = await res.json();
+        setGuest(data);
+        setStatus(data.status);
+        setMessage(data.message || '');
         setIsSuccess(true);
       } else {
         throw new Error('Erro ao salvar resposta.');
@@ -90,7 +96,7 @@ export default function Rsvp() {
           <p style={{ fontSize: '1.2rem', marginTop: '1rem' }}>
             {status === 1
               ? 'Sua presença foi confirmada. Estamos muito felizes e ansiosos para te ver!'
-              : 'Sentiremos sua falta, mas agradecemos por nos avisar.'}
+              : 'Obrigada por nos avisar! Sentiremos muito a sua falta nesse dia tão especial, mas agradecemos de coração pelo carinho e por nos avisar. Mesmo de longe, você estará presente em nossos pensamentos e fará parte desse momento tão lindo da chegada da Elena.'}
           </p>
         </div>
       </div>
@@ -108,6 +114,18 @@ export default function Rsvp() {
             alt="Chá de bebê da Elena — dia 20/09/2026 às 11h"
           />
         </h1>
+        <div className="event-location">
+          <div className="event-location-text">
+            <MapPin size={18} aria-hidden="true" />
+            <span>
+              Estância Santa Bárbara
+              <small>Rua Canabura - Lácio, Marília - SP</small>
+            </span>
+          </div>
+          <a className="btn event-location-button" href={MAPS_URL} target="_blank" rel="noreferrer">
+            Abrir no Maps
+          </a>
+        </div>
         <p className="rsvp-invitation">
           Com muita alegria, queremos convidar você para celebrar a chegada da Elena
           e fazer parte deste momento tão especial para a nossa família.

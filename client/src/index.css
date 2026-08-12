@@ -130,6 +130,58 @@ h1, h2, h3, h4, h5, h6 {
   filter: drop-shadow(0 8px 18px rgba(151, 101, 137, 0.12));
 }
 
+.event-location {
+  width: min(100%, 620px);
+  margin: 0.85rem auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.event-location-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  color: #75405a;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.event-location-text span {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.15;
+}
+
+.event-location-text small {
+  margin-top: 0.15rem;
+  color: #806d75;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.event-location-text svg {
+  color: var(--color-event-pink-dark);
+  flex: 0 0 auto;
+}
+
+.event-location-button {
+  padding: 0.45rem 1rem;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(201, 104, 141, 0.28);
+  color: var(--color-event-pink-dark);
+  box-shadow: 0 6px 16px rgba(151, 101, 137, 0.1);
+}
+
+.event-location-button:hover {
+  background: rgba(255, 244, 249, 0.95);
+  border-color: rgba(201, 104, 141, 0.42);
+}
+
 .rsvp-page {
   min-height: 100vh;
   max-width: 960px;
@@ -438,6 +490,29 @@ input:focus, textarea:focus {
 
   .event-logo {
     width: min(100%, 300px);
+  }
+
+  .event-location {
+    margin-top: 0.65rem;
+    gap: 0.55rem;
+  }
+
+  .event-location-text {
+    width: 100%;
+    font-size: 0.98rem;
+  }
+
+  .event-location-text span {
+    align-items: center;
+  }
+
+  .event-location-text small {
+    font-size: 0.82rem;
+  }
+
+  .event-location-button {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.95rem;
   }
 
   .rsvp-page {
