@@ -32,3 +32,4 @@ dotnet run
 ## GitHub
 
 Arquivos de build, dependencias e configuracoes locais com segredos ficam fora do repositorio pelo `.gitignore`.
+codex resume 019feb93-62cc-73b0-9f3d-86374a1fec89

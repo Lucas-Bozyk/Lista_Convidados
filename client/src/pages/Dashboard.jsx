@@ -68,30 +68,36 @@ export default function Dashboard() {
   const pendingCount = guests.filter(g => g.status === 0).length;
 
   return (
-    <div className="container animate-fade-in-up">
-      <div className="text-center mb-8">
-        <h1 style={{ color: 'var(--color-primary-dark)', fontSize: '2.5rem' }}>🍼 Painel do Chá Revelação</h1>
+    <div className="container dashboard-page animate-fade-in-up">
+      <div className="dashboard-header text-center mb-8">
+        <h1 className="event-logo-heading">
+          <img
+            className="event-logo"
+            src="/logo title.png"
+            alt="Chá de bebê da Elena — dia 20/09/2026 às 11h"
+          />
+        </h1>
         <p style={{ color: 'var(--color-text-light)' }}>Gerencie seus convidados e acompanhe as confirmações de presença.</p>
       </div>
 
       {/* Stats */}
-      <div className="flex gap-4 mb-8" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
-        <div className="card text-center" style={{ padding: '1.5rem' }}>
+      <div className="dashboard-stats gap-4 mb-8">
+        <div className="card stat-card text-center">
           <Users size={32} color="var(--color-primary)" style={{ margin: '0 auto 0.5rem' }} />
           <h3>{guests.length}</h3>
           <p style={{ fontSize: '0.875rem', color: 'var(--color-text-light)' }}>Total</p>
         </div>
-        <div className="card text-center" style={{ padding: '1.5rem' }}>
+        <div className="card stat-card text-center">
           <CheckCircle size={32} color="var(--color-success)" style={{ margin: '0 auto 0.5rem' }} />
           <h3>{confirmedCount}</h3>
           <p style={{ fontSize: '0.875rem', color: 'var(--color-text-light)' }}>Confirmados</p>
         </div>
-        <div className="card text-center" style={{ padding: '1.5rem' }}>
+        <div className="card stat-card text-center">
           <XCircle size={32} color="var(--color-danger)" style={{ margin: '0 auto 0.5rem' }} />
           <h3>{declinedCount}</h3>
           <p style={{ fontSize: '0.875rem', color: 'var(--color-text-light)' }}>Recusados</p>
         </div>
-        <div className="card text-center" style={{ padding: '1.5rem' }}>
+        <div className="card stat-card text-center">
           <Clock size={32} color="#b08a1c" style={{ margin: '0 auto 0.5rem' }} />
           <h3>{pendingCount}</h3>
           <p style={{ fontSize: '0.875rem', color: 'var(--color-text-light)' }}>Pendentes</p>
@@ -99,12 +105,12 @@ export default function Dashboard() {
       </div>
 
       {/* Add Guest Form */}
-      <div className="card mb-8">
+      <div className="card guest-form-card mb-8">
         <h2 style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <Plus size={24} color="var(--color-primary)" /> Adicionar Convidado
         </h2>
-        <form onSubmit={handleAddGuest} className="flex gap-4" style={{ flexWrap: 'wrap' }}>
-          <div style={{ flex: '1 1 200px' }}>
+        <form onSubmit={handleAddGuest} className="guest-form flex gap-4">
+          <div className="guest-form-field">
             <input
               type="text"
               placeholder="Nome do convidado"
@@ -113,7 +119,7 @@ export default function Dashboard() {
               required
             />
           </div>
-          <div style={{ flex: '1 1 200px' }}>
+          <div className="guest-form-field">
             <input
               type="tel"
               placeholder="WhatsApp (ex: 11999998888)"
@@ -132,7 +138,7 @@ export default function Dashboard() {
       </div>
 
       {/* Guest List */}
-      <div className="card">
+      <div className="card guest-list-card">
         <h2 style={{ marginBottom: '1.5rem' }}>Lista de Convidados</h2>
 
         {loading ? (
@@ -140,8 +146,8 @@ export default function Dashboard() {
         ) : guests.length === 0 ? (
           <p className="text-center" style={{ color: 'var(--color-text-light)' }}>Nenhum convidado adicionado ainda.</p>
         ) : (
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+          <div className="guest-table-wrapper">
+            <table className="guest-table">
               <thead>
                 <tr style={{ borderBottom: '2px solid #eaeaea' }}>
                   <th style={{ padding: '1rem 0.5rem' }}>Nome</th>
@@ -153,15 +159,17 @@ export default function Dashboard() {
               <tbody>
                 {guests.map((guest) => (
                   <tr key={guest.id} style={{ borderBottom: '1px solid #f5f5f5' }}>
-                    <td style={{ padding: '1rem 0.5rem', fontWeight: '500' }}>
-                      {guest.name}
-                      {guest.contact && <div style={{ fontSize: '0.8rem', color: 'var(--color-text-light)', fontWeight: 'normal' }}>{guest.contact}</div>}
+                    <td className="guest-name-cell" data-label="Nome" style={{ padding: '1rem 0.5rem', fontWeight: '500' }}>
+                      <div>
+                        {guest.name}
+                        {guest.contact && <div style={{ fontSize: '0.8rem', color: 'var(--color-text-light)', fontWeight: 'normal' }}>{guest.contact}</div>}
+                      </div>
                     </td>
-                    <td style={{ padding: '1rem 0.5rem' }}>{getStatusBadge(guest.status)}</td>
-                    <td style={{ padding: '1rem 0.5rem', fontSize: '0.9rem', maxWidth: '200px' }}>
+                    <td data-label="Status" style={{ padding: '1rem 0.5rem' }}>{getStatusBadge(guest.status)}</td>
+                    <td data-label="Mensagem" style={{ padding: '1rem 0.5rem', fontSize: '0.9rem', maxWidth: '200px' }}>
                       {guest.message ? `"${guest.message}"` : '-'}
                     </td>
-                    <td style={{ padding: '1rem 0.5rem', textAlign: 'right' }}>
+                    <td className="guest-action-cell" data-label="Ação" style={{ padding: '1rem 0.5rem', textAlign: 'right' }}>
                       <button
                         onClick={() => copyToClipboard(guest.token)}
                         className="btn btn-outline"

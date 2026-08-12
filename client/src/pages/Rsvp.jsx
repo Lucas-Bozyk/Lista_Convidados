@@ -98,61 +98,63 @@ export default function Rsvp() {
   }
 
   return (
-    <div className="container flex flex-col justify-center items-center animate-fade-in-up" style={{ minHeight: '100vh' }}>
+    <div className="container rsvp-page flex flex-col items-center animate-fade-in-up">
 
-      <div className="text-center mb-8">
-        <h1 style={{ color: 'var(--color-primary-dark)', fontSize: '2.5rem', marginBottom: '0.5rem' }}>
-          Chá Revelação 06/06 às 19:00
+      <div className="rsvp-intro text-center">
+        <h1 className="event-logo-heading">
+          <img
+            className="event-logo"
+            src="/logo title.png"
+            alt="Chá de bebê da Elena — dia 20/09/2026 às 11h"
+          />
         </h1>
-        <p style={{ fontSize: '1.2rem', color: 'var(--color-text-light)' }}>
-          Olá, <strong>{guest.name}</strong>!
+        <p className="rsvp-invitation">
+          Com muita alegria, queremos convidar você para celebrar a chegada da Elena
+          e fazer parte deste momento tão especial para a nossa família.
+          Sua presença tornará esse dia ainda mais inesquecível!
         </p>
       </div>
 
-      <div className="card" style={{ width: '100%', maxWidth: '500px' }}>
-        <h2 className="text-center mb-6" style={{ fontSize: '1.5rem' }}>Você irá comparecer?</h2>
+      <div className="card rsvp-card">
+        <h2 className="rsvp-card-title text-center">Confirmar presença</h2>
 
         <form onSubmit={handleSubmit}>
-          <div className="flex justify-center gap-4 mb-8">
+          <div className="rsvp-choices flex justify-center gap-4">
             <button
               type="button"
               onClick={() => setStatus(1)}
-              className="card text-center"
+              className="card rsvp-choice text-center"
               style={{
-                flex: 1,
-                padding: '1.5rem',
-                border: status === 1 ? '2px solid var(--color-success)' : '2px solid transparent',
+                border: status === 1 ? '2px solid var(--color-event-pink-dark)' : '2px solid transparent',
                 transform: status === 1 ? 'scale(1.05)' : 'scale(1)',
                 cursor: 'pointer'
               }}
             >
-              <Check size={48} color="var(--color-success)" style={{ margin: '0 auto 0.5rem' }} />
-              <h3 style={{ margin: 0, color: 'var(--color-success)' }}>Sim, eu vou!</h3>
+              <Check size={32} color="var(--color-event-pink-dark)" style={{ margin: '0 auto 0.3rem' }} />
+              <h3 style={{ margin: 0, color: 'var(--color-event-pink-dark)' }}>Sim, eu vou!</h3>
             </button>
 
             <button
               type="button"
               onClick={() => setStatus(2)}
-              className="card text-center"
+              className="card rsvp-choice text-center"
               style={{
-                flex: 1,
-                padding: '1.5rem',
-                border: status === 2 ? '2px solid var(--color-danger)' : '2px solid transparent',
+                border: status === 2 ? '2px solid var(--color-lavender)' : '2px solid transparent',
                 transform: status === 2 ? 'scale(1.05)' : 'scale(1)',
                 cursor: 'pointer'
               }}
             >
-              <X size={48} color="var(--color-danger)" style={{ margin: '0 auto 0.5rem' }} />
-              <h3 style={{ margin: 0, color: 'var(--color-danger)' }}>Não poderei ir</h3>
+              <X size={32} color="var(--color-lavender)" style={{ margin: '0 auto 0.3rem' }} />
+              <h3 style={{ margin: 0, color: 'var(--color-lavender)' }}>Não poderei ir</h3>
             </button>
           </div>
 
-          <div className="mb-8">
+          <div className="rsvp-message-field">
             <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>
               Deixe uma mensagem para os pais (opcional)
             </label>
             <textarea
-              rows="4"
+              rows="2"
               placeholder="Sua mensagem..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -161,8 +163,7 @@ export default function Rsvp() {
 
           <button
             type="submit"
-            className="btn btn-primary w-100"
-            style={{ width: '100%', padding: '1rem', fontSize: '1.2rem' }}
+            className="btn btn-rsvp rsvp-submit w-100"
             disabled={status === null || isSubmitting}
           >
             {isSubmitting ? 'Enviando...' : 'Confirmar Resposta'}

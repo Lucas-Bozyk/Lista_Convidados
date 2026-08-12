@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&display=swap');
 
 :root {
   /* Premium Baby Shower Palette */
@@ -8,6 +8,11 @@
   --color-primary-dark: #91afb5;
   --color-secondary: #f1d1d0; /* Soft pink */
   --color-secondary-dark: #d8b4b3;
+  --color-event-pink: #e7a6bd;
+  --color-event-pink-dark: #c9688d;
+  --color-event-pink-text: #61243b;
+  --color-lavender: #9672b4;
+  --color-lavender-soft: #f0e9f8;
   --color-accent: #f8e5a0; /* Soft yellow */
   
   --color-text: #4a4a4a;
@@ -35,17 +40,232 @@
 }
 
 body {
-  font-family: 'Outfit', sans-serif;
-  background-color: var(--color-bg);
+  font-family: 'EB Garamond', Garamond, 'Times New Roman', serif;
+  min-height: 100vh;
+  position: relative;
+  isolation: isolate;
+  background-color: transparent;
   color: var(--color-text);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+}
+
+html,
+body {
+  width: 100%;
+  min-width: 320px;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--color-bg);
+  background-image: url('/background desktop.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  flex: 1;
+}
+
+.development-note {
+  padding: 0.75rem 1rem 1.25rem;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #806d75;
+}
+
+.development-note a {
+  color: var(--color-event-pink-dark);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.development-note a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 767px) {
+  body::before {
+    background-image: url('/background mobile.png');
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   color: var(--color-text);
   margin-bottom: 0.5rem;
+}
+
+.event-logo-heading {
+  margin: 0;
+  line-height: 0;
+}
+
+.event-logo {
+  display: block;
+  width: min(100%, 520px);
+  height: auto;
+  margin: 0 auto;
+  filter: drop-shadow(0 8px 18px rgba(151, 101, 137, 0.12));
+}
+
+.rsvp-page {
+  min-height: 100vh;
+  max-width: 960px;
+  padding-top: clamp(2.5rem, 8vh, 5.5rem);
+  padding-bottom: 4rem;
+}
+
+.rsvp-intro {
+  width: 100%;
+  max-width: 900px;
+}
+
+.rsvp-invitation {
+  width: 100%;
+  max-width: 900px;
+  margin: 1.5rem auto 0;
+  font-size: 1.55rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: #75405a;
+}
+
+.rsvp-card {
+  width: 100%;
+  max-width: 780px;
+  margin-top: 1.75rem;
+  padding: 1.5rem 2rem;
+  border: 1px solid rgba(201, 104, 141, 0.2);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.97) 0%,
+    rgba(255, 244, 249, 0.96) 58%,
+    rgba(245, 239, 251, 0.96) 100%
+  );
+  box-shadow: 0 16px 42px rgba(151, 101, 137, 0.13);
+}
+
+.rsvp-card-title {
+  margin-bottom: 1.25rem;
+  font-size: 1.4rem;
+}
+
+.rsvp-choices,
+.rsvp-message-field {
+  margin-bottom: 1.25rem;
+}
+
+.rsvp-choices {
+  align-items: stretch;
+}
+
+.rsvp-choice {
+  flex: 0 1 230px;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-md);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(252, 235, 243, 0.94) 55%,
+    rgba(240, 233, 248, 0.94) 100%
+  );
+  box-shadow: 0 6px 18px rgba(171, 115, 153, 0.12);
+}
+
+.rsvp-choice:hover {
+  box-shadow: 0 9px 22px rgba(171, 115, 153, 0.2);
+}
+
+.rsvp-choice h3 {
+  font-size: 0.92rem;
+}
+
+.rsvp-message-field textarea {
+  min-height: 4.5rem;
+  padding: 0.6rem 0.85rem;
+  resize: vertical;
+}
+
+.rsvp-submit {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1.05rem;
+}
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.stat-card {
+  padding: 1.5rem;
+}
+
+.guest-form {
+  flex-wrap: wrap;
+}
+
+.guest-form-field {
+  flex: 1 1 200px;
+  min-width: 0;
+}
+
+.guest-table-wrapper {
+  overflow-x: auto;
+}
+
+.guest-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+@media (max-width: 767px) {
+  .rsvp-page {
+    padding-top: 2rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .event-logo {
+    width: min(100%, 340px);
+  }
+
+  .rsvp-invitation {
+    font-size: 1.1rem;
+    line-height: 1.35;
+  }
+
+  .rsvp-card {
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+  }
+
+  .rsvp-choice {
+    flex: 1 1 0;
+    padding: 0.6rem 0.5rem;
+  }
 }
 
 button {
@@ -115,6 +335,19 @@ input:focus, textarea:focus {
   background: var(--color-primary-dark);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(181, 205, 210, 0.5);
+}
+
+.btn-rsvp {
+  background: var(--color-event-pink-dark);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(201, 104, 141, 0.3);
+}
+
+.btn-rsvp:hover:not(:disabled) {
+  background: #ad4c72;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(201, 104, 141, 0.4);
 }
 
 .btn-secondary {
@@ -187,4 +420,203 @@ input:focus, textarea:focus {
 
 .animate-fade-in-up {
   animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (max-width: 767px) {
+  body::before {
+    background-position: center top;
+  }
+
+  .container {
+    padding: 1.25rem 1rem;
+  }
+
+  .card {
+    padding: 1.25rem;
+    border-radius: 18px;
+  }
+
+  .event-logo {
+    width: min(100%, 300px);
+  }
+
+  .rsvp-page {
+    min-height: auto;
+    padding-top: 1.25rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .rsvp-invitation {
+    max-width: 34rem;
+    margin-top: 1rem;
+    padding-inline: 0.25rem;
+    font-size: 1.08rem;
+    line-height: 1.4;
+  }
+
+  .rsvp-card {
+    margin-top: 1.25rem;
+    padding: 1rem;
+    border-radius: 18px;
+  }
+
+  .rsvp-card-title {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+  }
+
+  .rsvp-choices {
+    gap: 0.65rem;
+    margin-bottom: 1rem;
+  }
+
+  .rsvp-choice {
+    min-width: 0;
+    padding: 0.55rem 0.35rem;
+    transform: none !important;
+  }
+
+  .rsvp-choice h3 {
+    font-size: 0.86rem;
+    line-height: 1.2;
+  }
+
+  .rsvp-message-field {
+    margin-bottom: 1rem;
+  }
+
+  .rsvp-message-field label {
+    font-size: 0.95rem;
+  }
+
+  input,
+  textarea {
+    font-size: 1rem;
+  }
+
+  .development-note {
+    padding: 0.65rem 1rem 1rem;
+    font-size: 0.75rem;
+  }
+
+  .dashboard-page {
+    padding-top: 1.25rem;
+    padding-bottom: 2rem;
+  }
+
+  .dashboard-header {
+    margin-bottom: 1.25rem;
+  }
+
+  .dashboard-header p {
+    max-width: 22rem;
+    margin: 0.75rem auto 0;
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+
+  .dashboard-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .stat-card {
+    padding: 0.85rem 0.5rem;
+  }
+
+  .stat-card svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .stat-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .guest-form-card,
+  .guest-list-card {
+    margin-bottom: 1.25rem;
+  }
+
+  .guest-form-card h2,
+  .guest-list-card h2 {
+    margin-bottom: 1rem !important;
+    font-size: 1.25rem;
+  }
+
+  .guest-form {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .guest-form-field {
+    flex: none;
+    width: 100%;
+  }
+
+  .guest-form .btn {
+    width: 100%;
+  }
+
+  .guest-table-wrapper {
+    overflow: visible;
+  }
+
+  .guest-table,
+  .guest-table tbody,
+  .guest-table tr,
+  .guest-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .guest-table thead {
+    display: none;
+  }
+
+  .guest-table tr {
+    margin-bottom: 0.85rem;
+    padding: 0.75rem;
+    border: 1px solid rgba(201, 104, 141, 0.16) !important;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.72);
+  }
+
+  .guest-table tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .guest-table td {
+    display: grid;
+    grid-template-columns: minmax(72px, 0.42fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 0.65rem;
+    max-width: none !important;
+    padding: 0.4rem 0 !important;
+    text-align: left !important;
+    overflow-wrap: anywhere;
+  }
+
+  .guest-table td::before {
+    content: attr(data-label);
+    color: #806d75;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .guest-action-cell .btn {
+    width: fit-content;
+    justify-self: start;
+  }
+}
+
+@media (max-width: 350px) {
+  .rsvp-choices {
+    flex-direction: column;
+  }
+
+  .rsvp-choice {
+    width: 100%;
+  }
 }
