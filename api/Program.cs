@@ -85,7 +85,7 @@ app.MapGet("/api/guests/rsvp/{token}", async (string token, AppDbContext db) =>
     var guest = await db.Guests.FirstOrDefaultAsync(g => g.Token == token);
     if (guest == null) return Results.NotFound("Convidado não encontrado.");
     
-    return Results.Ok(guest);
+    return Results.Ok(CreateRsvpResponse(guest, app.Configuration));
 });
 
 app.MapPost("/api/guests/rsvp/{token}", async (string token, RsvpRequest request, AppDbContext db) =>
@@ -97,7 +97,25 @@ app.MapPost("/api/guests/rsvp/{token}", async (string token, RsvpRequest request
     guest.Message = request.Message;
     
     await db.SaveChangesAsync();
-    return Results.Ok(guest);
+    return Results.Ok(CreateRsvpResponse(guest, app.Configuration));
 });
 
 app.Run();
+
+static object CreateRsvpResponse(Guest guest, IConfiguration configuration)
+{
+    var shouldShowPix = guest.Status == GuestStatus.Declined && guest.ShowPixSuggestion;
+
+    return new
+    {
+        guest.Id,
+        guest.Name,
+        guest.Weight,
+        guest.DiaperSize,
+        guest.ShowPixSuggestion,
+        guest.Token,
+        guest.Status,
+        guest.Message,
+        PixKey = shouldShowPix ? configuration["PIX_KEY"] : null
+    };
+}

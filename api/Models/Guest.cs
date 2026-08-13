@@ -16,6 +16,8 @@ namespace api.Models
         [Required]
         public string DiaperSize { get; set; } = "P";
 
+        public bool ShowPixSuggestion { get; set; }
+
         [Required]
         public string Token { get; set; } = Guid.NewGuid().ToString("N")[..10]; // Short 10-char token
 

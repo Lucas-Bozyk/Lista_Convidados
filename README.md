@@ -22,6 +22,7 @@ npm run dev
 ### Backend
 
 Copie `api/appsettings.Development.example.json` para `api/appsettings.Development.json` e ajuste a string de conexao do PostgreSQL.
+Configure `PIX_KEY` no ambiente da API para habilitar a copia da chave PIX quando a sugestao estiver ativa para um convite recusado.
 
 ```bash
 cd api

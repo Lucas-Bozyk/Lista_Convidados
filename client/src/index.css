@@ -218,6 +218,32 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 6px 16px rgba(151, 101, 137, 0.1);
 }
 
+.beverage-notice {
+  width: min(100%, 680px);
+  margin: 0.8rem auto 0;
+  color: #806d75;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.pix-suggestion {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(201, 104, 141, 0.18);
+}
+
+.pix-suggestion p {
+  margin-bottom: 0.75rem;
+  color: #75405a;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.pix-copy-button {
+  width: 100%;
+}
+
 .rsvp-card {
   width: 100%;
   max-width: 780px;
@@ -296,6 +322,22 @@ h1, h2, h3, h4, h5, h6 {
 .guest-form-field {
   flex: 1 1 200px;
   min-width: 0;
+}
+
+.guest-checkbox-field {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 2.75rem;
+  color: #75405a;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.guest-checkbox-field input {
+  width: auto;
+  accent-color: var(--color-event-pink-dark);
 }
 
 .guest-table-wrapper {

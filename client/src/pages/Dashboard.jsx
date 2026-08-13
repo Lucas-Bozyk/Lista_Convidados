@@ -6,7 +6,7 @@ const API_URL = import.meta.env.VITE_API_URL || '';
 export default function Dashboard() {
   const [guests, setGuests] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [newGuest, setNewGuest] = useState({ name: '', weight: 1, diaperSize: 'P' });
+  const [newGuest, setNewGuest] = useState({ name: '', weight: 1, diaperSize: 'P', showPixSuggestion: false });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function Dashboard() {
       });
 
       if (res.ok) {
-        setNewGuest({ name: '', weight: 1, diaperSize: 'P' });
+        setNewGuest({ name: '', weight: 1, diaperSize: 'P', showPixSuggestion: false });
         fetchGuests();
       }
     } catch (error) {
@@ -153,6 +153,14 @@ export default function Dashboard() {
               <option value="GG">GG</option>
             </select>
           </div>
+          <label className="guest-checkbox-field">
+            <input
+              type="checkbox"
+              checked={newGuest.showPixSuggestion}
+              onChange={(e) => setNewGuest({ ...newGuest, showPixSuggestion: e.target.checked })}
+            />
+            Sugestao
+          </label>
           <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
             Adicionar
           </button>
@@ -175,6 +183,7 @@ export default function Dashboard() {
                   <th style={{ padding: '1rem 0.5rem' }}>Nome</th>
                   <th style={{ padding: '1rem 0.5rem' }}>Pessoas</th>
                   <th style={{ padding: '1rem 0.5rem' }}>Sugestao</th>
+                  <th style={{ padding: '1rem 0.5rem' }}>PIX</th>
                   <th style={{ padding: '1rem 0.5rem' }}>Status</th>
                   <th style={{ padding: '1rem 0.5rem' }}>Mensagem</th>
                   <th style={{ padding: '1rem 0.5rem', textAlign: 'right' }}>Ação</th>
@@ -190,6 +199,7 @@ export default function Dashboard() {
                     </td>
                     <td data-label="Pessoas" style={{ padding: '1rem 0.5rem' }}>{getGuestWeight(guest)}</td>
                     <td data-label="Sugestao" style={{ padding: '1rem 0.5rem' }}>{getDiaperSuggestion(guest.diaperSize)}</td>
+                    <td data-label="PIX" style={{ padding: '1rem 0.5rem' }}>{guest.showPixSuggestion ? 'Sim' : 'Nao'}</td>
                     <td data-label="Status" style={{ padding: '1rem 0.5rem' }}>{getStatusBadge(guest.status)}</td>
                     <td data-label="Mensagem" style={{ padding: '1rem 0.5rem', fontSize: '0.9rem', maxWidth: '200px' }}>
                       {guest.message ? `"${guest.message}"` : '-'}

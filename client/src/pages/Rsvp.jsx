@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Check, X, Heart, Loader2, MapPin } from 'lucide-react';
+import { Check, X, Heart, Loader2, MapPin, Copy } from 'lucide-react';
 
 const API_URL = import.meta.env.VITE_API_URL || '';
 const MAPS_URL = 'https://maps.app.goo.gl/6a6B8FD8BA67sxqa9';
@@ -16,6 +16,50 @@ export default function Rsvp() {
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+
+  const copyPixKey = () => {
+    if (!guest?.pixKey) return;
+    navigator.clipboard.writeText(guest.pixKey);
+    alert('Chave PIX copiada.');
+  };
+
+  const EventInfo = ({ showInvitation = true }) => (
+    <div className="rsvp-intro text-center">
+      <h1 className="event-logo-heading">
+        <img
+          className="event-logo"
+          src="/logo title.png"
+          alt="Cha de bebe da Elena - dia 20/09/2026 as 11h"
+        />
+      </h1>
+      <div className="event-location">
+        <div className="event-location-text">
+          <MapPin size={18} aria-hidden="true" />
+          <span>
+            Estancia Santa Barbara
+            <small>Rua Canabura - Lacio, Marilia - SP</small>
+          </span>
+        </div>
+        <a className="btn event-location-button" href={MAPS_URL} target="_blank" rel="noreferrer">
+          Abrir no Maps
+        </a>
+      </div>
+      {showInvitation && (
+        <p className="rsvp-invitation">
+          Com muita alegria, queremos convidar voce para celebrar a chegada da Elena
+          e fazer parte deste momento tao especial para a nossa familia.
+          Sua presenca tornara esse dia ainda mais inesquecivel!
+        </p>
+      )}
+      <p className="diaper-suggestion">
+        Sugestao de presente: {getDiaperSuggestion(guest.diaperSize)}
+      </p>
+      <p className="beverage-notice">
+        Nao serviremos bebidas alcoolicas no evento. Caso deseje, fique a vontade
+        para levar sua bebida.
+      </p>
+    </div>
+  );
 
   useEffect(() => {
     fetchGuest();
@@ -90,8 +134,10 @@ export default function Rsvp() {
 
   if (isSuccess) {
     return (
-      <div className="container flex justify-center items-center animate-fade-in-up" style={{ minHeight: '100vh' }}>
-        <div className="card text-center" style={{ maxWidth: '500px' }}>
+      <div className="container rsvp-page flex flex-col items-center animate-fade-in-up">
+        <EventInfo showInvitation={false} />
+
+        <div className="card rsvp-card text-center">
           <Heart size={64} color="var(--color-secondary)" style={{ margin: '0 auto 1rem' }} />
           <h2 style={{ color: 'var(--color-primary-dark)', fontSize: '2rem' }}>Obrigado!</h2>
           <p style={{ fontSize: '1.2rem', marginTop: '1rem' }}>
@@ -99,6 +145,14 @@ export default function Rsvp() {
               ? 'Sua presença foi confirmada. Estamos muito felizes e ansiosos para te ver!'
               : 'Obrigada por nos avisar! Sentiremos muito a sua falta nesse dia tão especial, mas agradecemos de coração pelo carinho e por nos avisar. Mesmo de longe, você estará presente em nossos pensamentos e fará parte desse momento tão lindo da chegada da Elena.'}
           </p>
+          {status === 2 && guest?.pixKey && (
+            <div className="pix-suggestion">
+              <p>Sugestao de carinho via PIX</p>
+              <button type="button" className="btn btn-outline pix-copy-button" onClick={copyPixKey}>
+                <Copy size={16} /> Copiar chave PIX
+              </button>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -136,6 +190,10 @@ export default function Rsvp() {
 
       <p className="diaper-suggestion">
         Sugestao de presente: {getDiaperSuggestion(guest.diaperSize)}
+      </p>
+      <p className="beverage-notice">
+        Nao serviremos bebidas alcoolicas no evento. Caso deseje, fique a vontade
+        para levar sua bebida.
       </p>
 
       <div className="card rsvp-card">
