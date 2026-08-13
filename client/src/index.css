@@ -221,10 +221,20 @@ h1, h2, h3, h4, h5, h6 {
 .beverage-notice {
   width: min(100%, 680px);
   margin: 0.8rem auto 0;
+  display: inline-flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.45rem;
   color: #806d75;
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.35;
+}
+
+.beverage-notice svg {
+  margin-top: 0.14rem;
+  color: var(--color-event-pink-dark);
+  flex: 0 0 auto;
 }
 
 .pix-suggestion {

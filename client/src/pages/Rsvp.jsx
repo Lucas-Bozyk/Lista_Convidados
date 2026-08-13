@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Check, X, Heart, Loader2, MapPin, Copy } from 'lucide-react';
+import { Check, X, Heart, Loader2, MapPin, Copy, Info } from 'lucide-react';
 
 const API_URL = import.meta.env.VITE_API_URL || '';
 const MAPS_URL = 'https://maps.app.goo.gl/6a6B8FD8BA67sxqa9';
@@ -55,8 +55,8 @@ export default function Rsvp() {
         Sugestao de presente: {getDiaperSuggestion(guest.diaperSize)}
       </p>
       <p className="beverage-notice">
-        Nao serviremos bebidas alcoolicas no evento. Caso deseje, fique a vontade
-        para levar sua bebida.
+        <Info size={16} aria-hidden="true" />
+        <span>Optamos por nao servir bebidas alcoolicas, mas cada convidado pode trazer a bebida que preferir.</span>
       </p>
     </div>
   );
@@ -192,8 +192,8 @@ export default function Rsvp() {
         Sugestao de presente: {getDiaperSuggestion(guest.diaperSize)}
       </p>
       <p className="beverage-notice">
-        Nao serviremos bebidas alcoolicas no evento. Caso deseje, fique a vontade
-        para levar sua bebida.
+        <Info size={16} aria-hidden="true" />
+        <span>Optamos por nao servir bebidas alcoolicas, mas cada convidado pode trazer a bebida que preferir.</span>
       </p>
 
       <div className="card rsvp-card">
