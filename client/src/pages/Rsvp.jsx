@@ -147,7 +147,7 @@ export default function Rsvp() {
           </p>
           {status === 2 && guest?.pixKey && (
             <div className="pix-suggestion">
-              <p>Sugestao de carinho via PIX</p>
+              <p>Sua presenca seria o nosso maior presente! Mas, como voce nao pode estar conosco, caso queira nos presentear mesmo assim, deixaremos nossa chave Pix com muito carinho.</p>
               <button type="button" className="btn btn-outline pix-copy-button" onClick={copyPixKey}>
                 <Copy size={16} /> Copiar chave PIX
               </button>
