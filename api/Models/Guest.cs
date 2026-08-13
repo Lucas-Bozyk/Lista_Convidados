@@ -10,7 +10,11 @@ namespace api.Models
         [Required]
         public string Name { get; set; } = string.Empty;
 
-        public string? Contact { get; set; }
+        [Range(1, 99)]
+        public int Weight { get; set; } = 1;
+
+        [Required]
+        public string DiaperSize { get; set; } = "P";
 
         [Required]
         public string Token { get; set; } = Guid.NewGuid().ToString("N")[..10]; // Short 10-char token

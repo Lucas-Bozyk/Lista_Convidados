@@ -204,6 +204,20 @@ h1, h2, h3, h4, h5, h6 {
   color: #75405a;
 }
 
+.diaper-suggestion {
+  width: fit-content;
+  max-width: 100%;
+  margin: 1rem auto 0;
+  padding: 0.55rem 1rem;
+  border: 1px solid rgba(201, 104, 141, 0.24);
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.74);
+  color: #75405a;
+  font-size: 1.05rem;
+  font-weight: 600;
+  box-shadow: 0 6px 16px rgba(151, 101, 137, 0.1);
+}
+
 .rsvp-card {
   width: 100%;
   max-width: 780px;
@@ -339,7 +353,18 @@ input, textarea {
   background: var(--color-surface);
 }
 
-input:focus, textarea:focus {
+select {
+  font-family: inherit;
+  border: 1px solid #eaeaea;
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  width: 100%;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  background: var(--color-surface);
+}
+
+input:focus, textarea:focus, select:focus {
   border-color: var(--color-primary);
   outline: none;
 }

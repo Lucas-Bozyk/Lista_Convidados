@@ -57,6 +57,17 @@ app.MapGet("/api/guests", async (AppDbContext db) =>
 
 app.MapPost("/api/guests", async (Guest guest, AppDbContext db) =>
 {
+    if (guest.Weight < 1 || guest.Weight > 99)
+    {
+        return Results.BadRequest("O peso do convite deve ser entre 1 e 99.");
+    }
+
+    guest.DiaperSize = (guest.DiaperSize ?? "P").Trim().ToUpperInvariant();
+    if (guest.DiaperSize is not ("P" or "G" or "GG"))
+    {
+        return Results.BadRequest("O tamanho da fralda deve ser P, G ou GG.");
+    }
+
     // Ensure a unique token is generated if one wasn't provided
     if (string.IsNullOrEmpty(guest.Token))
     {

@@ -4,6 +4,7 @@ import { Check, X, Heart, Loader2, MapPin } from 'lucide-react';
 
 const API_URL = import.meta.env.VITE_API_URL || '';
 const MAPS_URL = 'https://maps.app.goo.gl/6a6B8FD8BA67sxqa9';
+const getDiaperSuggestion = (diaperSize) => `Fralda ${diaperSize || 'P'} Huggies`;
 
 export default function Rsvp() {
   const { token } = useParams();
@@ -132,6 +133,10 @@ export default function Rsvp() {
           Sua presença tornará esse dia ainda mais inesquecível!
         </p>
       </div>
+
+      <p className="diaper-suggestion">
+        Sugestao de presente: {getDiaperSuggestion(guest.diaperSize)}
+      </p>
 
       <div className="card rsvp-card">
         <h2 className="rsvp-card-title text-center">Confirmar presença</h2>

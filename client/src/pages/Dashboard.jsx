@@ -6,7 +6,7 @@ const API_URL = import.meta.env.VITE_API_URL || '';
 export default function Dashboard() {
   const [guests, setGuests] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [newGuest, setNewGuest] = useState({ name: '', contact: '' });
+  const [newGuest, setNewGuest] = useState({ name: '', weight: 1, diaperSize: 'P' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function Dashboard() {
       });
 
       if (res.ok) {
-        setNewGuest({ name: '', contact: '' });
+        setNewGuest({ name: '', weight: 1, diaperSize: 'P' });
         fetchGuests();
       }
     } catch (error) {
@@ -63,9 +63,18 @@ export default function Dashboard() {
     }
   };
 
-  const confirmedCount = guests.filter(g => g.status === 1).length;
-  const declinedCount = guests.filter(g => g.status === 2).length;
-  const pendingCount = guests.filter(g => g.status === 0).length;
+  const getGuestWeight = (guest) => Math.max(Number(guest.weight) || 1, 1);
+  const getDiaperSuggestion = (diaperSize) => `Fralda ${diaperSize || 'P'} Huggies`;
+  const totalCount = guests.reduce((sum, guest) => sum + getGuestWeight(guest), 0);
+  const confirmedCount = guests
+    .filter(g => g.status === 1)
+    .reduce((sum, guest) => sum + getGuestWeight(guest), 0);
+  const declinedCount = guests
+    .filter(g => g.status === 2)
+    .reduce((sum, guest) => sum + getGuestWeight(guest), 0);
+  const pendingCount = guests
+    .filter(g => g.status === 0)
+    .reduce((sum, guest) => sum + getGuestWeight(guest), 0);
 
   return (
     <div className="container dashboard-page animate-fade-in-up">
@@ -84,8 +93,8 @@ export default function Dashboard() {
       <div className="dashboard-stats gap-4 mb-8">
         <div className="card stat-card text-center">
           <Users size={32} color="var(--color-primary)" style={{ margin: '0 auto 0.5rem' }} />
-          <h3>{guests.length}</h3>
-          <p style={{ fontSize: '0.875rem', color: 'var(--color-text-light)' }}>Total</p>
+          <h3>{totalCount}</h3>
+          <p style={{ fontSize: '0.875rem', color: 'var(--color-text-light)' }}>Pessoas</p>
         </div>
         <div className="card stat-card text-center">
           <CheckCircle size={32} color="var(--color-success)" style={{ margin: '0 auto 0.5rem' }} />
@@ -121,15 +130,28 @@ export default function Dashboard() {
           </div>
           <div className="guest-form-field">
             <input
-              type="tel"
-              placeholder="WhatsApp (ex: 11999998888)"
-              value={newGuest.contact}
-              maxLength={11}
+              type="number"
+              placeholder="Peso do convite"
+              value={newGuest.weight}
+              min="1"
+              max="99"
               onChange={(e) => {
-                const onlyNums = e.target.value.replace(/[^0-9]/g, '');
-                setNewGuest({ ...newGuest, contact: onlyNums });
+                const weight = Math.min(Math.max(Number(e.target.value) || 1, 1), 99);
+                setNewGuest({ ...newGuest, weight });
               }}
+              required
             />
+          </div>
+          <div className="guest-form-field">
+            <select
+              value={newGuest.diaperSize}
+              onChange={(e) => setNewGuest({ ...newGuest, diaperSize: e.target.value })}
+              required
+            >
+              <option value="P">P</option>
+              <option value="G">G</option>
+              <option value="GG">GG</option>
+            </select>
           </div>
           <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
             Adicionar
@@ -151,6 +173,8 @@ export default function Dashboard() {
               <thead>
                 <tr style={{ borderBottom: '2px solid #eaeaea' }}>
                   <th style={{ padding: '1rem 0.5rem' }}>Nome</th>
+                  <th style={{ padding: '1rem 0.5rem' }}>Pessoas</th>
+                  <th style={{ padding: '1rem 0.5rem' }}>Sugestao</th>
                   <th style={{ padding: '1rem 0.5rem' }}>Status</th>
                   <th style={{ padding: '1rem 0.5rem' }}>Mensagem</th>
                   <th style={{ padding: '1rem 0.5rem', textAlign: 'right' }}>Ação</th>
@@ -162,9 +186,10 @@ export default function Dashboard() {
                     <td className="guest-name-cell" data-label="Nome" style={{ padding: '1rem 0.5rem', fontWeight: '500' }}>
                       <div>
                         {guest.name}
-                        {guest.contact && <div style={{ fontSize: '0.8rem', color: 'var(--color-text-light)', fontWeight: 'normal' }}>{guest.contact}</div>}
                       </div>
                     </td>
+                    <td data-label="Pessoas" style={{ padding: '1rem 0.5rem' }}>{getGuestWeight(guest)}</td>
+                    <td data-label="Sugestao" style={{ padding: '1rem 0.5rem' }}>{getDiaperSuggestion(guest.diaperSize)}</td>
                     <td data-label="Status" style={{ padding: '1rem 0.5rem' }}>{getStatusBadge(guest.status)}</td>
                     <td data-label="Mensagem" style={{ padding: '1rem 0.5rem', fontSize: '0.9rem', maxWidth: '200px' }}>
                       {guest.message ? `"${guest.message}"` : '-'}
