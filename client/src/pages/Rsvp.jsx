@@ -135,7 +135,7 @@ export default function Rsvp() {
   if (isSuccess) {
     return (
       <div className="container rsvp-page flex flex-col items-center animate-fade-in-up">
-        <EventInfo showInvitation={false} />
+        {status === 1 && <EventInfo showInvitation={false} />}
 
         <div className="card rsvp-card text-center">
           <Heart size={64} color="var(--color-secondary)" style={{ margin: '0 auto 1rem' }} />
