@@ -149,6 +149,7 @@ export default function Dashboard() {
               required
             >
               <option value="P">P</option>
+              <option value="M">M</option>
               <option value="G">G</option>
               <option value="GG">GG</option>
             </select>
